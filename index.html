@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" x-data="{ darkMode: localStorage.getItem('angel_plumbing_dark_mode') === 'true' }" :class="{ 'dark': darkMode }">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,8 +17,17 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Alpine.js for Color Theme & State Management -->
+    <script>
+        if (localStorage.getItem('angel_plumbing_dark_mode') === 'true') {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -58,6 +67,12 @@
     </script>
     <style>
         .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+        }
+        .dark .glass-card {
             background: rgba(15, 23, 42, 0.82);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -68,11 +83,21 @@
             box-shadow: 0 25px 60px rgba(14, 165, 233, 0.15);
         }
         .hero-glow {
+            background: radial-gradient(circle at 75% 15%, rgba(14, 165, 233, 0.15), transparent 45%),
+                        radial-gradient(circle at 15% 85%, rgba(239, 68, 68, 0.1), transparent 45%),
+                        radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.08), transparent 55%);
+        }
+        .dark .hero-glow {
             background: radial-gradient(circle at 75% 15%, rgba(14, 165, 233, 0.22), transparent 45%),
                         radial-gradient(circle at 15% 85%, rgba(239, 68, 68, 0.15), transparent 45%),
                         radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.1), transparent 55%);
         }
         .gradient-text {
+            background: linear-gradient(135deg, #0284c7 0%, #059669 50%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .dark .gradient-text {
             background: linear-gradient(135deg, #38bdf8 0%, #34d399 50%, #60a5fa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -94,7 +119,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-950 overflow-x-hidden">
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-950 overflow-x-hidden transition-colors duration-300">
 
     <!-- Floating Emergency WhatsApp Widget -->
     <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 items-end">
@@ -123,7 +148,7 @@
     </div>
 
     <!-- Header Navigation -->
-    <header class="sticky top-[45px] sm:top-[49px] z-40 glass-card border-b border-slate-800/80 shadow-2xl">
+    <header class="sticky top-[45px] sm:top-[49px] z-40 glass-card border-b border-slate-200 dark:border-slate-800/80 shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
             <a href="#home" class="flex items-center gap-3 group shrink-0">
                 <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-emerald-400 p-0.5 shadow-xl shadow-cyan-500/30 group-hover:scale-105 transition-transform duration-300">
@@ -132,26 +157,31 @@
                     </div>
                 </div>
                 <div>
-                    <span class="text-lg sm:text-xl font-black tracking-tight text-white block leading-none">
-                        Angel <span class="text-cyan-400">Plumbers</span>
+                    <span class="text-lg sm:text-xl font-black tracking-tight text-slate-900 dark:text-white block leading-none">
+                        Angel <span class="text-cyan-600 dark:text-cyan-400">Plumbers</span>
                     </span>
-                    <span class="text-[9px] sm:text-[10px] text-slate-400 font-extrabold uppercase tracking-widest block mt-1">Sandton • Bryanston • Rivonia</span>
+                    <span class="text-[9px] sm:text-[10px] text-slate-500 dark:text-slate-400 font-extrabold uppercase tracking-widest block mt-1">Sandton • Bryanston • Rivonia</span>
                 </div>
             </a>
 
-            <nav class="hidden lg:flex items-center gap-7 text-xs font-bold text-slate-300 tracking-wider">
-                <a href="#home" class="hover:text-cyan-400 transition-colors">HOME</a>
-                <a href="#services" class="hover:text-cyan-400 transition-colors">SERVICES</a>
-                <a href="#gallery" class="hover:text-cyan-400 transition-colors">OUR WORK</a>
-                <a href="#about" class="hover:text-cyan-400 transition-colors">ABOUT US</a>
-                <a href="#reviews" class="hover:text-cyan-400 transition-colors">REVIEWS</a>
-                <a href="#faq" class="hover:text-cyan-400 transition-colors">FAQ</a>
-                <a href="#contact" class="hover:text-cyan-400 transition-colors">CONTACT</a>
+            <nav class="hidden lg:flex items-center gap-7 text-xs font-bold text-slate-600 dark:text-slate-300 tracking-wider">
+                <a href="#home" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">HOME</a>
+                <a href="#services" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">SERVICES</a>
+                <a href="#gallery" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">OUR WORK</a>
+                <a href="#about" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">ABOUT US</a>
+                <a href="#reviews" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">REVIEWS</a>
+                <a href="#faq" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">FAQ</a>
+                <a href="#contact" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">CONTACT</a>
             </nav>
 
             <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                <!-- Color / Dark Mode Toggle Button (Trinity Style) -->
+                <button @click="darkMode = !darkMode; localStorage.setItem('angel_plumbing_dark_mode', darkMode)" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-200 hover:scale-105 transition-all shadow-sm shrink-0" title="Toggle Light / Dark Color Mode">
+                    <i class="fa-solid" :class="darkMode ? 'fa-sun text-amber-400' : 'fa-moon text-slate-700'"></i>
+                </button>
+
                 <a href="https://wa.me/27736282526?text=Hi%20Angel%20Plumbers,%20I%20need%20emergency%20plumbing%20assistance." target="_blank" class="hidden sm:inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 text-white font-bold text-xs transition-all shadow-lg shadow-emerald-600/30 active:scale-95 border border-emerald-500/40 whitespace-nowrap">
-                    <i class="fab fa-whatsapp text-base text-emerald-300"></i>
+                    <i class="fab fa-whatsapp text-base text-emerald-200"></i>
                     <span>WhatsApp</span>
                 </a>
                 <a href="tel:+27736282526" class="inline-flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black text-xs transition-all glow-btn active:scale-95 whitespace-nowrap">
@@ -172,18 +202,18 @@
         <!-- Hero Section -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-28 grid lg:grid-cols-12 gap-12 items-center relative z-10">
             <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
-                <div class="inline-flex items-center gap-2.5 px-4.5 py-2 rounded-full bg-slate-900/90 border border-slate-700/80 text-xs font-bold shadow-2xl backdrop-blur-md">
-                    <div class="flex text-amber-400 gap-1 text-xs">
+                <div class="inline-flex items-center gap-2.5 px-4.5 py-2 rounded-full bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/80 text-xs font-bold shadow-xl backdrop-blur-md">
+                    <div class="flex text-amber-500 dark:text-amber-400 gap-1 text-xs">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <span class="text-slate-200">Rated <strong class="text-white">4.8 Stars</strong> across <strong class="text-white">76+ Google Reviews</strong></span>
+                    <span class="text-slate-700 dark:text-slate-200">Rated <strong class="text-slate-900 dark:text-white">4.8 Stars</strong> across <strong class="text-slate-900 dark:text-white">76+ Google Reviews</strong></span>
                 </div>
 
                 <h1 class="text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight leading-[1.1]">
                     Emergency Plumber in <span class="gradient-text">Sandton, Bryanston, Rivonia, Sunninghill & Fourways</span>
                 </h1>
 
-                <p class="text-base sm:text-lg text-slate-300 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0">
                     Angel Plumbers delivers rapid response, expert diagnosis, and reliable plumbing repairs for residential and commercial properties. Led by Collin and his skilled team, we fix burst pipes, leaking geysers, and blocked drains within the hour.
                 </p>
 
@@ -198,27 +228,30 @@
                     </a>
                 </div>
 
-                <div class="grid grid-cols-3 gap-3 sm:gap-4 pt-8 border-t border-slate-800/80 text-center lg:text-left">
-                    <div class="glass-card p-3 sm:p-4 rounded-2xl border-slate-800">
-                        <div class="text-2xl sm:text-3xl font-black text-cyan-400">&lt; 60 Mins</div>
-                        <div class="text-[11px] sm:text-xs text-slate-400 font-semibold mt-1">Average Response</div>
+                <div class="grid grid-cols-3 gap-3 sm:gap-4 pt-8 border-t border-slate-200 dark:border-slate-800/80 text-center lg:text-left">
+                    <div class="glass-card p-3 sm:p-4 rounded-2xl border-slate-200 dark:border-slate-800">
+                        <div class="text-2xl sm:text-3xl font-black text-cyan-600 dark:text-cyan-400">&lt; 60 Mins</div>
+                        <div class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-semibold mt-1">Average Response</div>
                     </div>
-                    <div class="glass-card p-3 sm:p-4 rounded-2xl border-slate-800">
-                        <div class="text-2xl sm:text-3xl font-black text-emerald-400">76+</div>
-                        <div class="text-[11px] sm:text-xs text-slate-400 font-semibold mt-1">5-Star Reviews</div>
-                    </div>
-                    <div class="glass-card p-3 sm:p-4 rounded-2xl border-slate-800">
-                        <div class="text-2xl sm:text-3xl font-black text-amber-400">Fast</div>
-                        <div class="text-[11px] sm:text-xs text-slate-400 font-semibold mt-1">Emergency Response</div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Angel+Plumbers+Sandton" target="_blank" rel="noopener noreferrer" class="glass-card p-3 sm:p-4 rounded-2xl border-slate-200 dark:border-slate-800 block hover:border-emerald-500/50 hover:bg-white/80 dark:hover:bg-slate-900/80 transition-all group">
+                        <div class="text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400 flex items-center justify-center lg:justify-start gap-1.5">
+                            <span>76+</span>
+                            <i class="fas fa-external-link-alt text-xs opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+                        </div>
+                        <div class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-semibold mt-1">5-Star Reviews</div>
+                    </a>
+                    <div class="glass-card p-3 sm:p-4 rounded-2xl border-slate-200 dark:border-slate-800">
+                        <div class="text-2xl sm:text-3xl font-black text-amber-500 dark:text-amber-400">Fast</div>
+                        <div class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-semibold mt-1">Emergency Response</div>
                     </div>
                 </div>
             </div>
 
             <div class="lg:col-span-5 space-y-6">
                 <!-- Featured Real Image Card with Floating Glow -->
-                <div class="glass-card rounded-3xl p-3.5 border border-slate-700 shadow-2xl overflow-hidden group relative animate-float">
+                <div class="glass-card rounded-3xl p-3.5 border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden group relative animate-float">
                     <div class="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                    <div class="relative rounded-2xl overflow-hidden aspect-video bg-slate-900">
+                    <div class="relative rounded-2xl overflow-hidden aspect-video bg-slate-950">
                         <img src="images/1.jpeg" alt="Angel Plumbers Team at Work in Sandton" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent"></div>
                         <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-2">
@@ -229,33 +262,33 @@
                 </div>
 
                 <!-- Instant Quote Card -->
-                <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-700 relative overflow-hidden">
+                <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-700 relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
 
                     <div class="relative z-10 space-y-5">
-                        <div class="flex items-center justify-between pb-3.5 border-b border-slate-800 gap-2">
+                        <div class="flex items-center justify-between pb-3.5 border-b border-slate-200 dark:border-slate-800 gap-2">
                             <div>
-                                <h3 class="text-base font-black text-white">Need Immediate Help?</h3>
-                                <p class="text-xs text-slate-400">Request a quote or dispatch a plumber instantly.</p>
+                                <h3 class="text-base font-black text-slate-900 dark:text-white">Need Immediate Help?</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Request a quote or dispatch a plumber instantly.</p>
                             </div>
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black bg-emerald-950 text-emerald-400 border border-emerald-500/40 shadow shrink-0">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-ping shrink-0"></span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border border-emerald-500/40 shadow shrink-0">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 mr-2 animate-ping shrink-0"></span>
                                 On Duty
                             </span>
                         </div>
 
                         <form id="quickQuoteForm" onsubmit="handleQuickQuote(event)" class="space-y-3.5">
                             <div>
-                                <label for="quickName" class="block text-xs font-bold text-slate-300 mb-1">Your Full Name</label>
-                                <input type="text" id="quickName" required placeholder="e.g. David van der Merwe" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors shadow-inner">
+                                <label for="quickName" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Your Full Name</label>
+                                <input type="text" id="quickName" required placeholder="e.g. David van der Merwe" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-cyan-500 transition-colors shadow-inner">
                             </div>
                             <div>
-                                <label for="quickPhone" class="block text-xs font-bold text-slate-300 mb-1">Phone Number</label>
-                                <input type="tel" id="quickPhone" required placeholder="e.g. 073 628 2526" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors shadow-inner">
+                                <label for="quickPhone" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Phone Number</label>
+                                <input type="tel" id="quickPhone" required placeholder="e.g. 073 628 2526" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-cyan-500 transition-colors shadow-inner">
                             </div>
                             <div>
-                                <label for="quickService" class="block text-xs font-bold text-slate-300 mb-1">Plumbing Issue / Suburb</label>
-                                <select id="quickService" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-500 transition-colors shadow-inner">
+                                <label for="quickService" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Plumbing Issue / Suburb</label>
+                                <select id="quickService" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500 transition-colors shadow-inner">
                                     <option>Emergency Burst Pipe / Geyser Leak</option>
                                     <option>Blocked Drain / Toilet Overflow</option>
                                     <option>Bathroom Plumbing Maintenance</option>
@@ -273,7 +306,7 @@
                         </div>
 
                         <div class="text-center pt-1">
-                            <span class="text-[11px] text-slate-400 font-medium">📍 1 Herbert Road, Sandton 2191</span>
+                            <span class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">📍 1 Herbert Road, Sandton 2191</span>
                         </div>
                     </div>
                 </div>
@@ -282,94 +315,94 @@
     </main>
 
     <!-- Services Section -->
-    <section id="services" class="py-28 bg-slate-900/60 border-t border-slate-800/80 relative">
+    <section id="services" class="py-28 bg-slate-100 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800/80 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center max-w-3xl mx-auto space-y-4 mb-20">
-                <span class="text-cyan-400 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-800/50 shadow">Our Expertise</span>
-                <h2 class="text-3xl sm:text-5xl font-black text-white">Professional Plumbing Services in Sandton & Surrounding Areas</h2>
-                <p class="text-slate-300 text-base sm:text-lg">
+                <span class="text-cyan-600 dark:text-cyan-400 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-100 dark:bg-cyan-950/85 border border-cyan-300 dark:border-cyan-800/50 shadow">Our Expertise</span>
+                <h2 class="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white">Professional Plumbing Services in Sandton & Surrounding Areas</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg">
                     When you have a plumbing emergency or need reliable maintenance, Angel Plumbers provides prompt, professional assistance across Sandton, Bryanston, Rivonia, Sunninghill and Fourways.
                 </p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Service 1 -->
-                <div class="glass-card rounded-3xl p-8 border border-slate-800 transition-all duration-300 group hover:-translate-y-2">
-                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl font-bold mb-6 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:scale-110 transition-all shadow-xl">
+                <div class="glass-card rounded-3xl p-8 border border-slate-200 dark:border-slate-800 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center text-2xl font-bold mb-6 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:scale-110 transition-all shadow-xl">
                         <i class="fas fa-bolt"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Emergency Plumbing</h3>
-                    <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Emergency Plumbing</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-6">
                         Rapid emergency callouts for burst pipes, leaking geysers, blocked drains, overflowing toilets and urgent water leaks to prevent property damage.
                     </p>
-                    <ul class="space-y-2.5 text-xs text-slate-300 font-medium pt-2 border-t border-slate-800/80">
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> Burst pipe repairs</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> Geyser leaks & replacements</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> Overflowing toilets</li>
+                    <ul class="space-y-2.5 text-xs text-slate-600 dark:text-slate-300 font-medium pt-2 border-t border-slate-200 dark:border-slate-800/80">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> Burst pipe repairs</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> Geyser leaks & replacements</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> Overflowing toilets</li>
                     </ul>
                 </div>
 
                 <!-- Service 2 -->
-                <div class="glass-card rounded-3xl p-8 border border-slate-800 transition-all duration-300 group hover:-translate-y-2">
-                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl font-bold mb-6 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:scale-110 transition-all shadow-xl">
+                <div class="glass-card rounded-3xl p-8 border border-slate-200 dark:border-slate-800 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center text-2xl font-bold mb-6 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:scale-110 transition-all shadow-xl">
                         <i class="fas fa-water"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Blocked Drains</h3>
-                    <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Blocked Drains</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-6">
                         Advanced clearing for stubborn blocked kitchen sinks, bathroom drains, shower drains, and main sewer lines using professional equipment.
                     </p>
-                    <ul class="space-y-2.5 text-xs text-slate-300 font-medium pt-2 border-t border-slate-800/80">
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> High-pressure drain cleaning</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> Root removal & clearing</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> CCTV drain inspection</li>
+                    <ul class="space-y-2.5 text-xs text-slate-600 dark:text-slate-300 font-medium pt-2 border-t border-slate-200 dark:border-slate-800/80">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> High-pressure drain cleaning</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> Root removal & clearing</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> CCTV drain inspection</li>
                     </ul>
                 </div>
 
                 <!-- Service 3 -->
-                <div class="glass-card rounded-3xl p-8 border border-slate-800 transition-all duration-300 group hover:-translate-y-2">
-                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl font-bold mb-6 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:scale-110 transition-all shadow-xl">
+                <div class="glass-card rounded-3xl p-8 border border-slate-200 dark:border-slate-800 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center text-2xl font-bold mb-6 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:scale-110 transition-all shadow-xl">
                         <i class="fas fa-fire-flame-curved"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Geyser Services</h3>
-                    <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Geyser Services</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-6">
                         Expert geyser repairs, thermostat replacements, safety valve servicing, and new geyser installations compliant with municipal regulations.
                     </p>
-                    <ul class="space-y-2.5 text-xs text-slate-300 font-medium pt-2 border-t border-slate-800/80">
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> Leaking geyser repairs</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> New geyser installations</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> Valve & thermostat replacement</li>
+                    <ul class="space-y-2.5 text-xs text-slate-600 dark:text-slate-300 font-medium pt-2 border-t border-slate-200 dark:border-slate-800/80">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> Leaking geyser repairs</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> New geyser installations</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> Valve & thermostat replacement</li>
                     </ul>
                 </div>
 
                 <!-- Service 5 -->
-                <div class="glass-card rounded-3xl p-8 border border-slate-800 transition-all duration-300 group hover:-translate-y-2">
-                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl font-bold mb-6 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:scale-110 transition-all shadow-xl">
+                <div class="glass-card rounded-3xl p-8 border border-slate-200 dark:border-slate-800 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center text-2xl font-bold mb-6 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:scale-110 transition-all shadow-xl">
                         <i class="fas fa-bath"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Bathroom Plumbing</h3>
-                    <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Bathroom Plumbing</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-6">
                         Professional installation and repair of toilets, basins, showers, baths, mixers, and vanities for residential and commercial renovations.
                     </p>
-                    <ul class="space-y-2.5 text-xs text-slate-300 font-medium pt-2 border-t border-slate-800/80">
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> Tap & mixer repairs/installs</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> Toilet cistern maintenance</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> Shower waterproofing & traps</li>
+                    <ul class="space-y-2.5 text-xs text-slate-600 dark:text-slate-300 font-medium pt-2 border-t border-slate-200 dark:border-slate-800/80">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> Tap & mixer repairs/installs</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> Toilet cistern maintenance</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> Shower waterproofing & traps</li>
                     </ul>
                 </div>
 
                 <!-- Service 6 -->
-                <div class="glass-card rounded-3xl p-8 border border-slate-800 transition-all duration-300 group hover:-translate-y-2">
-                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl font-bold mb-6 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:scale-110 transition-all shadow-xl">
+                <div class="glass-card rounded-3xl p-8 border border-slate-200 dark:border-slate-800 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center text-2xl font-bold mb-6 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:scale-110 transition-all shadow-xl">
                         <i class="fas fa-building-shield"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Commercial Plumbing</h3>
-                    <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Commercial Plumbing</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-6">
                         Trusted plumbing maintenance contracts for office parks, apartment complexes, retail stores, and residential estates in Sandton.
                     </p>
-                    <ul class="space-y-2.5 text-xs text-slate-300 font-medium pt-2 border-t border-slate-800/80">
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> Body corporate maintenance</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> Commercial property repairs</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 shrink-0"></i> Priority service agreements</li>
+                    <ul class="space-y-2.5 text-xs text-slate-600 dark:text-slate-300 font-medium pt-2 border-t border-slate-200 dark:border-slate-800/80">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> Body corporate maintenance</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> Commercial property repairs</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-600 dark:text-cyan-400 shrink-0"></i> Priority service agreements</li>
                     </ul>
                 </div>
             </div>
@@ -379,33 +412,33 @@
     <!-- Photo Gallery / Our Work Section -->
     <section id="gallery" class="py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
-            <span class="text-cyan-400 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-800/50 shadow">Visual Showcase</span>
-            <h2 class="text-3xl sm:text-5xl font-black text-white">Angel Plumbers in Action</h2>
-            <p class="text-slate-300 text-base sm:text-lg">
+            <span class="text-cyan-600 dark:text-cyan-400 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-100 dark:bg-cyan-950/85 border border-cyan-300 dark:border-cyan-800/50 shadow">Visual Showcase</span>
+            <h2 class="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white">Angel Plumbers in Action</h2>
+            <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg">
                 Real plumbing work, professional equipment, and dedicated technicians serving Sandton and surrounding northern suburbs.
             </p>
         </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="glass-card rounded-3xl overflow-hidden border border-slate-800 group aspect-square relative shadow-2xl">
+            <div class="glass-card rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 group aspect-square relative shadow-2xl">
                 <img src="images/1.jpeg" alt="Plumbing Work 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                     <span class="text-sm font-bold text-white">Sandton Emergency Repair</span>
                 </div>
             </div>
-            <div class="glass-card rounded-3xl overflow-hidden border border-slate-800 group aspect-square relative shadow-2xl">
+            <div class="glass-card rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 group aspect-square relative shadow-2xl">
                 <img src="images/2.jpeg" alt="Plumbing Work 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                     <span class="text-sm font-bold text-white">Geyser & Pipe Maintenance</span>
                 </div>
             </div>
-            <div class="glass-card rounded-3xl overflow-hidden border border-slate-800 group aspect-square relative shadow-2xl">
+            <div class="glass-card rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 group aspect-square relative shadow-2xl">
                 <img src="images/3.webp" alt="Plumbing Work 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                     <span class="text-sm font-bold text-white">Professional Diagnostics</span>
                 </div>
             </div>
-            <div class="glass-card rounded-3xl overflow-hidden border border-slate-800 group aspect-square relative shadow-2xl">
+            <div class="glass-card rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 group aspect-square relative shadow-2xl">
                 <img src="images/4.webp" alt="Angel Plumbers" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                     <span class="text-sm font-bold text-white">Angel Plumbers Brand</span>
@@ -415,61 +448,61 @@
     </section>
 
     <!-- About Us Section -->
-    <section id="about" class="py-28 bg-slate-900/60 border-t border-slate-800/80">
+    <section id="about" class="py-28 bg-slate-100 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-12 gap-12 items-center">
                 <div class="lg:col-span-6 space-y-6">
-                    <span class="text-cyan-400 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-800/50 shadow">About Angel Plumbers</span>
-                    <h2 class="text-3xl sm:text-5xl font-black text-white">Reliable Plumbing Excellence Led by Collin & Team</h2>
-                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                    <span class="text-cyan-600 dark:text-cyan-400 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-100 dark:bg-cyan-950/85 border border-cyan-300 dark:border-cyan-800/50 shadow">About Angel Plumbers</span>
+                    <h2 class="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white">Reliable Plumbing Excellence Led by Collin & Team</h2>
+                    <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed">
                         Angel Plumbers provides professional plumbing services throughout Sandton, Bryanston, Rivonia, Sunninghill and Fourways. We specialise in emergency plumbing, geyser repairs, burst pipe repairs, blocked drains, bathroom plumbing, and general maintenance.
                     </p>
-                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                    <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed">
                         Our experienced plumbers assess problems thoroughly and carry out necessary repairs to prevent water damage and restore your plumbing quickly. Trusted for over two years by homeowners and apartment complexes alike for fair pricing, detail-oriented diagnosis, and genuine care.
                     </p>
 
                     <div class="grid sm:grid-cols-2 gap-4 pt-4">
-                        <div class="glass-card p-5 rounded-2xl border-slate-800 flex items-center gap-4">
-                            <div class="text-cyan-400 text-2xl shrink-0"><i class="fas fa-shield-halved"></i></div>
+                        <div class="glass-card p-5 rounded-2xl border-slate-200 dark:border-slate-800 flex items-center gap-4">
+                            <div class="text-cyan-600 dark:text-cyan-400 text-2xl shrink-0"><i class="fas fa-shield-halved"></i></div>
                             <div>
-                                <div class="text-sm font-bold text-white">Fully Licensed</div>
-                                <div class="text-xs text-slate-400">Certified & Compliant</div>
+                                <div class="text-sm font-bold text-slate-900 dark:text-white">Fully Licensed</div>
+                                <div class="text-xs text-slate-500 dark:text-slate-400">Certified & Compliant</div>
                             </div>
                         </div>
-                        <div class="glass-card p-5 rounded-2xl border-slate-800 flex items-center gap-4">
-                            <div class="text-emerald-400 text-2xl shrink-0"><i class="fas fa-handshake-angle"></i></div>
+                        <div class="glass-card p-5 rounded-2xl border-slate-200 dark:border-slate-800 flex items-center gap-4">
+                            <div class="text-emerald-600 dark:text-emerald-400 text-2xl shrink-0"><i class="fas fa-handshake-angle"></i></div>
                             <div>
-                                <div class="text-sm font-bold text-white">Fair & Transparent</div>
-                                <div class="text-xs text-slate-400">No hidden callout shock</div>
+                                <div class="text-sm font-bold text-slate-900 dark:text-white">Fair & Transparent</div>
+                                <div class="text-xs text-slate-500 dark:text-slate-400">No hidden callout shock</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="lg:col-span-6">
-                    <div class="glass-card rounded-3xl p-8 sm:p-10 border border-slate-800 space-y-6 shadow-2xl">
-                        <h3 class="text-2xl font-bold text-white flex items-center gap-3 pb-2 border-b border-slate-800">
-                            <i class="fas fa-clock text-cyan-400"></i>
+                    <div class="glass-card rounded-3xl p-8 sm:p-10 border border-slate-200 dark:border-slate-800 space-y-6 shadow-2xl">
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3 pb-2 border-b border-slate-200 dark:border-slate-800">
+                            <i class="fas fa-clock text-cyan-600 dark:text-cyan-400"></i>
                             <span>Operating Hours</span>
                         </h3>
                         <div class="space-y-4 text-sm">
-                            <div class="flex justify-between py-3 border-b border-slate-800/80 gap-2">
-                                <span class="text-slate-300 font-semibold">Monday to Friday</span>
-                                <span class="text-white font-bold text-right">07:00 AM – 05:00 PM</span>
+                            <div class="flex justify-between py-3 border-b border-slate-200 dark:border-slate-800/80 gap-2">
+                                <span class="text-slate-600 dark:text-slate-300 font-semibold">Monday to Friday</span>
+                                <span class="text-slate-900 dark:text-white font-bold text-right">07:00 AM – 05:00 PM</span>
                             </div>
-                            <div class="flex justify-between py-3 border-b border-slate-800/80 gap-2">
-                                <span class="text-slate-300 font-semibold">Saturday</span>
-                                <span class="text-white font-bold text-right">08:00 AM – 01:00 PM</span>
+                            <div class="flex justify-between py-3 border-b border-slate-200 dark:border-slate-800/80 gap-2">
+                                <span class="text-slate-600 dark:text-slate-300 font-semibold">Saturday</span>
+                                <span class="text-slate-900 dark:text-white font-bold text-right">08:00 AM – 01:00 PM</span>
                             </div>
-                            <div class="flex justify-between py-3 border-b border-slate-800/80 gap-2">
-                                <span class="text-slate-300 font-semibold">Sunday</span>
-                                <span class="text-rose-400 font-bold text-right">Closed (Emergency On-Call)</span>
+                            <div class="flex justify-between py-3 border-b border-slate-200 dark:border-slate-800/80 gap-2">
+                                <span class="text-slate-600 dark:text-slate-300 font-semibold">Sunday</span>
+                                <span class="text-rose-600 dark:text-rose-400 font-bold text-right">Closed (Emergency On-Call)</span>
                             </div>
                         </div>
 
-                        <div class="bg-cyan-950/40 border border-cyan-800/50 rounded-2xl p-6 space-y-2">
-                            <div class="text-xs font-black text-cyan-400 uppercase tracking-widest">Primary Service Areas</div>
-                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium">
+                        <div class="bg-cyan-50 dark:bg-cyan-950/40 border border-cyan-200 dark:border-cyan-800/50 rounded-2xl p-6 space-y-2">
+                            <div class="text-xs font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-widest">Primary Service Areas</div>
+                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
                                 Sandton, Bryanston, Rivonia, Sunninghill, Fourways and surrounding Northern Suburbs of Johannesburg.
                             </p>
                         </div>
@@ -487,112 +520,120 @@
     <!-- Testimonials Section -->
     <section id="reviews" class="py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto space-y-4 mb-20">
-            <div class="flex items-center justify-center text-amber-400 gap-1.5 text-xl">
+            <div class="flex items-center justify-center text-amber-500 dark:text-amber-400 gap-1.5 text-xl">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
             </div>
-            <span class="text-cyan-400 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-800/50 shadow">Client Testimonials</span>
-            <h2 class="text-3xl sm:text-5xl font-black text-white">Trusted by Homeowners & Property Managers in Sandton</h2>
+            <span class="text-cyan-600 dark:text-cyan-400 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-100 dark:bg-cyan-950/85 border border-cyan-300 dark:border-cyan-800/50 shadow">Client Testimonials</span>
+            <h2 class="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white">Trusted by Homeowners & Property Managers in Sandton</h2>
         </div>
 
         <div class="grid md:grid-cols-3 gap-8">
             <!-- Review 1 -->
-            <div class="glass-card rounded-3xl p-8 border border-slate-800 space-y-6 relative flex flex-col justify-between group hover:-translate-y-2 transition-transform duration-300">
+            <div class="glass-card rounded-3xl p-8 border border-slate-200 dark:border-slate-800 space-y-6 relative flex flex-col justify-between group hover:-translate-y-2 transition-transform duration-300">
                 <div class="space-y-4">
-                    <div class="flex text-amber-400 text-sm gap-1">
+                    <div class="flex text-amber-500 dark:text-amber-400 text-sm gap-1">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed italic">
+                    <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed italic">
                         "Collin and team are great. Quick response, excellent work, and good pricing. Hard to find reliable service like this nowadays. Will definitely use them again."
                     </p>
                 </div>
-                <div class="pt-4 border-t border-slate-800 flex items-center justify-between gap-2">
-                    <span class="text-xs font-bold text-white">Sandton Homeowner</span>
-                    <span class="text-[10px] text-emerald-400 font-bold bg-emerald-950/80 px-2.5 py-1 rounded-lg border border-emerald-500/30 whitespace-nowrap">Verified Google Review</span>
+                <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                    <span class="text-xs font-bold text-slate-900 dark:text-white">Sandton Homeowner</span>
+                    <span class="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold bg-emerald-100 dark:bg-emerald-950/80 px-2.5 py-1 rounded-lg border border-emerald-500/30 whitespace-nowrap">Verified Google Review</span>
                 </div>
             </div>
 
             <!-- Review 2 -->
-            <div class="glass-card rounded-3xl p-8 border border-slate-800 space-y-6 relative flex flex-col justify-between group hover:-translate-y-2 transition-transform duration-300">
+            <div class="glass-card rounded-3xl p-8 border border-slate-200 dark:border-slate-800 space-y-6 relative flex flex-col justify-between group hover:-translate-y-2 transition-transform duration-300">
                 <div class="space-y-4">
-                    <div class="flex text-amber-400 text-sm gap-1">
+                    <div class="flex text-amber-500 dark:text-amber-400 text-sm gap-1">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed italic">
+                    <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed italic">
                         "Just had them complete a plumbing job for me, they came within an hour of requesting assistance, they are detailed with their diagnosis, highly recommended not to mention their reasonable pricing."
                     </p>
                 </div>
-                <div class="pt-4 border-t border-slate-800 flex items-center justify-between gap-2">
-                    <span class="text-xs font-bold text-white">Bryanston Resident</span>
-                    <span class="text-[10px] text-emerald-400 font-bold bg-emerald-950/80 px-2.5 py-1 rounded-lg border border-emerald-500/30 whitespace-nowrap">Verified Google Review</span>
+                <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                    <span class="text-xs font-bold text-slate-900 dark:text-white">Bryanston Resident</span>
+                    <span class="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold bg-emerald-100 dark:bg-emerald-950/80 px-2.5 py-1 rounded-lg border border-emerald-500/30 whitespace-nowrap">Verified Google Review</span>
                 </div>
             </div>
 
             <!-- Review 3 -->
-            <div class="glass-card rounded-3xl p-8 border border-slate-800 space-y-6 relative flex flex-col justify-between group hover:-translate-y-2 transition-transform duration-300">
+            <div class="glass-card rounded-3xl p-8 border border-slate-200 dark:border-slate-800 space-y-6 relative flex flex-col justify-between group hover:-translate-y-2 transition-transform duration-300">
                 <div class="space-y-4">
-                    <div class="flex text-amber-400 text-sm gap-1">
+                    <div class="flex text-amber-500 dark:text-amber-400 text-sm gap-1">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed italic">
+                    <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed italic">
                         "I have relied on Collin’s company for both my apartments and my personal home over the past two years. They are a highly professional and skilled plumbing team, always resolving issues thoroughly so there is no need for repeat visits..."
                     </p>
                 </div>
-                <div class="pt-4 border-t border-slate-800 flex items-center justify-between gap-2">
-                    <span class="text-xs font-bold text-white">Property Portfolio Manager</span>
-                    <span class="text-[10px] text-emerald-400 font-bold bg-emerald-950/80 px-2.5 py-1 rounded-lg border border-emerald-500/30 whitespace-nowrap">Verified Google Review</span>
+                <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                    <span class="text-xs font-bold text-slate-900 dark:text-white">Property Portfolio Manager</span>
+                    <span class="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold bg-emerald-100 dark:bg-emerald-950/80 px-2.5 py-1 rounded-lg border border-emerald-500/30 whitespace-nowrap">Verified Google Review</span>
                 </div>
             </div>
+        </div>
+
+        <div class="mt-12 text-center">
+            <a href="https://www.google.com/maps/search/?api=1&query=Angel+Plumbers+Sandton" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-bold text-sm border border-slate-200 dark:border-slate-700 shadow-xl hover:border-cyan-500/50 transition-all group">
+                <i class="fab fa-google text-amber-500 dark:text-amber-400 group-hover:scale-110 transition-transform"></i>
+                <span>Read All 76+ Google Reviews</span>
+                <i class="fas fa-external-link-alt text-xs text-slate-400"></i>
+            </a>
         </div>
     </section>
 
     <!-- FAQ Section -->
     <section id="faq" class="py-28 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center space-y-4 mb-16">
-            <span class="text-cyan-400 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-800/50 shadow">Common Questions</span>
-            <h2 class="text-3xl sm:text-5xl font-black text-white">Frequently Asked Questions</h2>
+            <span class="text-cyan-600 dark:text-cyan-400 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-100 dark:bg-cyan-950/85 border border-cyan-300 dark:border-cyan-800/50 shadow">Common Questions</span>
+            <h2 class="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white">Frequently Asked Questions</h2>
         </div>
 
         <div class="space-y-4">
             <!-- FAQ 1 -->
-            <div class="glass-card rounded-3xl border border-slate-800 overflow-hidden transition-all">
-                <button onclick="toggleFaq(this)" class="w-full px-8 py-6 text-left font-bold text-white flex items-center justify-between gap-4 focus:outline-none hover:text-cyan-400">
+            <div class="glass-card rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden transition-all">
+                <button onclick="toggleFaq(this)" class="w-full px-8 py-6 text-left font-bold text-slate-900 dark:text-white flex items-center justify-between gap-4 focus:outline-none hover:text-cyan-600 dark:hover:text-cyan-400">
                     <span class="text-base sm:text-lg">What plumbing services do you offer?</span>
-                    <i class="fas fa-chevron-down text-cyan-400 transition-transform duration-300 text-lg shrink-0"></i>
+                    <i class="fas fa-chevron-down text-cyan-600 dark:text-cyan-400 transition-transform duration-300 text-lg shrink-0"></i>
                 </button>
-                <div class="px-8 pb-6 text-slate-300 text-sm sm:text-base leading-relaxed hidden border-t border-slate-800/80 pt-4">
+                <div class="px-8 pb-6 text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed hidden border-t border-slate-200 dark:border-slate-800/80 pt-4">
                     At Angel Plumbers, we provide a wide range of plumbing services including emergency repairs, geyser replacements, blocked drain cleaning, bathroom plumbing, and ongoing maintenance for both residential and commercial properties.
                 </div>
             </div>
 
             <!-- FAQ 2 -->
-            <div class="glass-card rounded-3xl border border-slate-800 overflow-hidden transition-all">
-                <button onclick="toggleFaq(this)" class="w-full px-8 py-6 text-left font-bold text-white flex items-center justify-between gap-4 focus:outline-none hover:text-cyan-400">
+            <div class="glass-card rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden transition-all">
+                <button onclick="toggleFaq(this)" class="w-full px-8 py-6 text-left font-bold text-slate-900 dark:text-white flex items-center justify-between gap-4 focus:outline-none hover:text-cyan-600 dark:hover:text-cyan-400">
                     <span class="text-base sm:text-lg">How quickly can you respond to emergencies?</span>
-                    <i class="fas fa-chevron-down text-cyan-400 transition-transform duration-300 text-lg shrink-0"></i>
+                    <i class="fas fa-chevron-down text-cyan-600 dark:text-cyan-400 transition-transform duration-300 text-lg shrink-0"></i>
                 </button>
-                <div class="px-8 pb-6 text-slate-300 text-sm sm:text-base leading-relaxed hidden border-t border-slate-800/80 pt-4">
-                    We typically arrive within 60 minutes for plumbing emergencies in Sandton, Bryanston, Rivonia, Sunninghill and Fourways. Call us directly at <a href="tel:+27736282526" class="text-cyan-400 font-bold underline">073 628 2526</a> for immediate dispatch.
+                <div class="px-8 pb-6 text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed hidden border-t border-slate-200 dark:border-slate-800/80 pt-4">
+                    We typically arrive within 60 minutes for plumbing emergencies in Sandton, Bryanston, Rivonia, Sunninghill and Fourways. Call us directly at <a href="tel:+27736282526" class="text-cyan-600 dark:text-cyan-400 font-bold underline">073 628 2526</a> for immediate dispatch.
                 </div>
             </div>
 
             <!-- FAQ 3 -->
-            <div class="glass-card rounded-3xl border border-slate-800 overflow-hidden transition-all">
-                <button onclick="toggleFaq(this)" class="w-full px-8 py-6 text-left font-bold text-white flex items-center justify-between gap-4 focus:outline-none hover:text-cyan-400">
+            <div class="glass-card rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden transition-all">
+                <button onclick="toggleFaq(this)" class="w-full px-8 py-6 text-left font-bold text-slate-900 dark:text-white flex items-center justify-between gap-4 focus:outline-none hover:text-cyan-600 dark:hover:text-cyan-400">
                     <span class="text-base sm:text-lg">Are your plumbers licensed and insured?</span>
-                    <i class="fas fa-chevron-down text-cyan-400 transition-transform duration-300 text-lg shrink-0"></i>
+                    <i class="fas fa-chevron-down text-cyan-600 dark:text-cyan-400 transition-transform duration-300 text-lg shrink-0"></i>
                 </button>
-                <div class="px-8 pb-6 text-slate-300 text-sm sm:text-base leading-relaxed hidden border-t border-slate-800/80 pt-4">
+                <div class="px-8 pb-6 text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed hidden border-t border-slate-200 dark:border-slate-800/80 pt-4">
                     Yes! Our team consists of highly skilled, professional plumbers with extensive experience in residential and commercial plumbing standards and compliance.
                 </div>
             </div>
 
             <!-- FAQ 4 -->
-            <div class="glass-card rounded-3xl border border-slate-800 overflow-hidden transition-all">
-                <button onclick="toggleFaq(this)" class="w-full px-8 py-6 text-left font-bold text-white flex items-center justify-between gap-4 focus:outline-none hover:text-cyan-400">
+            <div class="glass-card rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden transition-all">
+                <button onclick="toggleFaq(this)" class="w-full px-8 py-6 text-left font-bold text-slate-900 dark:text-white flex items-center justify-between gap-4 focus:outline-none hover:text-cyan-600 dark:hover:text-cyan-400">
                     <span class="text-base sm:text-lg">Do you offer free estimates and quotes?</span>
-                    <i class="fas fa-chevron-down text-cyan-400 transition-transform duration-300 text-lg shrink-0"></i>
+                    <i class="fas fa-chevron-down text-cyan-600 dark:text-cyan-400 transition-transform duration-300 text-lg shrink-0"></i>
                 </button>
-                <div class="px-8 pb-6 text-slate-300 text-sm sm:text-base leading-relaxed hidden border-t border-slate-800/80 pt-4">
+                <div class="px-8 pb-6 text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed hidden border-t border-slate-200 dark:border-slate-800/80 pt-4">
                     Yes, we provide transparent quotes before starting any work. Get in touch via phone, WhatsApp, or our online quote form to discuss your plumbing needs.
                 </div>
             </div>
@@ -600,74 +641,74 @@
     </section>
 
     <!-- Contact / Booking Section -->
-    <section id="contact" class="py-28 bg-slate-900/80 border-t border-slate-800">
+    <section id="contact" class="py-28 bg-slate-100 dark:bg-slate-900/80 border-t border-slate-200 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12 items-center">
             <div class="lg:col-span-6 space-y-6">
-                <span class="text-cyan-400 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-800/50 shadow">Get in Touch</span>
-                <h2 class="text-3xl sm:text-5xl font-black text-white">Fast, Affordable & Reliable Plumbing Services</h2>
-                <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                <span class="text-cyan-600 dark:text-cyan-400 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-100 dark:bg-cyan-950/85 border border-cyan-300 dark:border-cyan-800/50 shadow">Get in Touch</span>
+                <h2 class="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white">Fast, Affordable & Reliable Plumbing Services</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed">
                     Have a leaking geyser, blocked drain, or need a professional quote? Contact Angel Plumbers today. We are ready to assist you right away.
                 </p>
 
                 <div class="space-y-4 pt-2">
-                    <a href="tel:+27736282526" class="flex items-center gap-5 glass-card p-5 rounded-3xl border border-slate-800 hover:border-cyan-500/50 transition-all group">
-                        <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform shrink-0">
+                    <a href="tel:+27736282526" class="flex items-center gap-5 glass-card p-5 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 transition-all group">
+                        <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform shrink-0">
                             <i class="fas fa-phone"></i>
                         </div>
                         <div>
-                            <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">Call Phone / Emergency</div>
-                            <div class="text-base sm:text-lg font-black text-white">073 628 2526</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Call Phone / Emergency</div>
+                            <div class="text-base sm:text-lg font-black text-slate-900 dark:text-white">073 628 2526</div>
                         </div>
                     </a>
 
-                    <a href="mailto:info@angelplumbers.co.za" class="flex items-center gap-5 glass-card p-5 rounded-3xl border border-slate-800 hover:border-cyan-500/50 transition-all group">
-                        <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform shrink-0">
+                    <a href="mailto:info@angelplumbers.co.za" class="flex items-center gap-5 glass-card p-5 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 transition-all group">
+                        <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform shrink-0">
                             <i class="fas fa-envelope"></i>
                         </div>
                         <div>
-                            <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">Email Address</div>
-                            <div class="text-sm sm:text-base font-black text-white break-all">info@angelplumbers.co.za</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Email Address</div>
+                            <div class="text-sm sm:text-base font-black text-slate-900 dark:text-white break-all">info@angelplumbers.co.za</div>
                         </div>
                     </a>
 
-                    <div class="flex items-center gap-5 glass-card p-5 rounded-3xl border border-slate-800">
-                        <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl shrink-0">
+                    <div class="flex items-center gap-5 glass-card p-5 rounded-3xl border border-slate-200 dark:border-slate-800">
+                        <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center text-2xl shrink-0">
                             <i class="fas fa-location-dot"></i>
                         </div>
                         <div>
-                            <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">Physical Address</div>
-                            <div class="text-sm font-bold text-white">1 Herbert Road, Sandton 2191</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Physical Address</div>
+                            <div class="text-sm font-bold text-slate-900 dark:text-white">1 Herbert Road, Sandton 2191</div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="lg:col-span-6">
-                <div class="glass-card rounded-3xl p-8 sm:p-10 border border-slate-800 shadow-2xl relative overflow-hidden">
+                <div class="glass-card rounded-3xl p-8 sm:p-10 border border-slate-200 dark:border-slate-800 shadow-2xl relative overflow-hidden">
                     <div class="absolute bottom-0 right-0 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                    <h3 class="text-2xl font-bold text-white mb-6">Send Us a Message</h3>
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Send Us a Message</h3>
                     <form id="contactForm" onsubmit="handleContact(event)" class="space-y-4">
                         <div class="grid sm:grid-cols-2 gap-4">
                             <div>
-                                <label for="contactName" class="block text-xs font-bold text-slate-300 mb-1">Full Name</label>
-                                <input type="text" id="contactName" required placeholder="John Doe" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-cyan-500 shadow-inner">
+                                <label for="contactName" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Full Name</label>
+                                <input type="text" id="contactName" required placeholder="John Doe" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500 shadow-inner">
                             </div>
                             <div>
-                                <label for="contactPhone" class="block text-xs font-bold text-slate-300 mb-1">Phone Number</label>
-                                <input type="tel" id="contactPhone" required placeholder="073 628 2526" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-cyan-500 shadow-inner">
+                                <label for="contactPhone" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Phone Number</label>
+                                <input type="tel" id="contactPhone" required placeholder="073 628 2526" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500 shadow-inner">
                             </div>
                         </div>
                         <div>
-                            <label for="contactEmail" class="block text-xs font-bold text-slate-300 mb-1">Email Address</label>
-                            <input type="email" id="contactEmail" required placeholder="john@example.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-cyan-500 shadow-inner">
+                            <label for="contactEmail" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Email Address</label>
+                            <input type="email" id="contactEmail" required placeholder="john@example.com" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500 shadow-inner">
                         </div>
                         <div>
-                            <label for="contactMessage" class="block text-xs font-bold text-slate-300 mb-1">Your Message</label>
-                            <textarea id="contactMessage" rows="4" required placeholder="Describe your plumbing issue..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-cyan-500 shadow-inner"></textarea>
+                            <label for="contactMessage" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Your Message</label>
+                            <textarea id="contactMessage" rows="4" required placeholder="Describe your plumbing issue..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500 shadow-inner"></textarea>
                         </div>
                         <div class="flex items-center gap-2">
-                            <input type="checkbox" required id="privacyCheck" class="rounded bg-slate-900 border-slate-700 text-cyan-500 focus:ring-0 shrink-0">
-                            <label for="privacyCheck" class="text-xs text-slate-400">I have read and understand the <a href="privacy.html" class="text-cyan-400 underline hover:text-cyan-300">privacy policy</a>.</label>
+                            <input type="checkbox" required id="privacyCheck" class="rounded bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-cyan-500 focus:ring-0 shrink-0">
+                            <label for="privacyCheck" class="text-xs text-slate-600 dark:text-slate-400">I have read and understand the <a href="privacy.html" class="text-cyan-600 dark:text-cyan-400 underline hover:text-cyan-500">privacy policy</a>.</label>
                         </div>
                         <button type="submit" class="w-full py-4.5 px-4 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black text-sm transition-all glow-btn active:scale-95 whitespace-normal text-center">
                             Send Message
@@ -682,64 +723,64 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 border-t border-slate-800/80 pt-20 pb-12 text-slate-400 text-xs">
+    <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800/80 pt-20 pb-12 text-slate-600 dark:text-slate-400 text-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div class="space-y-4">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-cyan-500 flex items-center justify-center text-slate-950 font-black text-base overflow-hidden shadow-lg shrink-0">
                         <img src="images/logo.jpg" alt="Angel Plumbers Logo" class="w-full h-full object-cover">
                     </div>
-                    <span class="text-lg font-black text-white">Angel Plumbers</span>
+                    <span class="text-lg font-black text-slate-900 dark:text-white">Angel Plumbers</span>
                 </div>
-                <p class="text-slate-400 leading-relaxed text-xs">
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-xs">
                     Angel Plumbers offers reliable and professional plumbing services in Sandton and surrounding areas. From emergency repairs to routine maintenance, we've got you covered.
                 </p>
-                <div class="flex items-center gap-3 pt-2 text-slate-300">
-                    <a href="#" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-cyan-400 hover:border-cyan-500/50 transition-colors"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-cyan-400 hover:border-cyan-500/50 transition-colors"><i class="fab fa-x-twitter"></i></a>
-                    <a href="#" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-cyan-400 hover:border-cyan-500/50 transition-colors"><i class="fab fa-instagram"></i></a>
+                <div class="flex items-center gap-3 pt-2 text-slate-700 dark:text-slate-300">
+                    <a href="#" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center hover:text-cyan-600 dark:hover:text-cyan-400 hover:border-cyan-500/50 transition-colors"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center hover:text-cyan-600 dark:hover:text-cyan-400 hover:border-cyan-500/50 transition-colors"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center hover:text-cyan-600 dark:hover:text-cyan-400 hover:border-cyan-500/50 transition-colors"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
 
             <div class="space-y-3">
-                <h4 class="text-sm font-bold text-white uppercase tracking-wider">Quick Navigation</h4>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Quick Navigation</h4>
                 <ul class="space-y-2.5 text-xs">
-                    <li><a href="#home" class="hover:text-cyan-400 transition-colors">Home</a></li>
-                    <li><a href="#services" class="hover:text-cyan-400 transition-colors">Services</a></li>
-                    <li><a href="#gallery" class="hover:text-cyan-400 transition-colors">Our Work</a></li>
-                    <li><a href="#about" class="hover:text-cyan-400 transition-colors">About Us</a></li>
-                    <li><a href="#reviews" class="hover:text-cyan-400 transition-colors">Testimonials</a></li>
-                    <li><a href="#faq" class="hover:text-cyan-400 transition-colors">FAQ</a></li>
-                    <li><a href="#contact" class="hover:text-cyan-400 transition-colors">Contact</a></li>
+                    <li><a href="#home" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Home</a></li>
+                    <li><a href="#services" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Services</a></li>
+                    <li><a href="#gallery" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Our Work</a></li>
+                    <li><a href="#about" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">About Us</a></li>
+                    <li><a href="#reviews" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Testimonials</a></li>
+                    <li><a href="#faq" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">FAQ</a></li>
+                    <li><a href="#contact" class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Contact</a></li>
                 </ul>
             </div>
 
             <div class="space-y-3">
-                <h4 class="text-sm font-bold text-white uppercase tracking-wider">Services</h4>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Services</h4>
                 <ul class="space-y-2.5 text-xs">
-                    <li><span class="text-slate-400">Emergency Plumbing</span></li>
-                    <li><span class="text-slate-400">Burst Pipe Repairs</span></li>
-                    <li><span class="text-slate-400">Blocked Drains</span></li>
-                    <li><span class="text-slate-400">Geyser Services</span></li>
-                    <li><span class="text-slate-400">Bathroom Plumbing</span></li>
+                    <li><span class="text-slate-600 dark:text-slate-400">Emergency Plumbing</span></li>
+                    <li><span class="text-slate-600 dark:text-slate-400">Burst Pipe Repairs</span></li>
+                    <li><span class="text-slate-600 dark:text-slate-400">Blocked Drains</span></li>
+                    <li><span class="text-slate-600 dark:text-slate-400">Geyser Services</span></li>
+                    <li><span class="text-slate-600 dark:text-slate-400">Bathroom Plumbing</span></li>
                 </ul>
             </div>
 
             <div class="space-y-3">
-                <h4 class="text-sm font-bold text-white uppercase tracking-wider">Contact Info</h4>
-                <div class="space-y-2.5 text-xs text-slate-300">
-                    <p><strong class="text-white">Address:</strong> 1 Herbert Road, Sandton 2191</p>
-                    <p><strong class="text-white">Mobile:</strong> <a href="tel:+27736282526" class="hover:text-cyan-400">073 628 2526</a></p>
-                    <p><strong class="text-white">Email:</strong> <a href="mailto:info@angelplumbers.co.za" class="hover:text-cyan-400">info@angelplumbers.co.za</a></p>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Contact Info</h4>
+                <div class="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
+                    <p><strong class="text-slate-900 dark:text-white">Address:</strong> 1 Herbert Road, Sandton 2191</p>
+                    <p><strong class="text-slate-900 dark:text-white">Mobile:</strong> <a href="tel:+27736282526" class="hover:text-cyan-600 dark:hover:text-cyan-400">073 628 2526</a></p>
+                    <p><strong class="text-slate-900 dark:text-white">Email:</strong> <a href="mailto:info@angelplumbers.co.za" class="hover:text-cyan-600 dark:hover:text-cyan-400">info@angelplumbers.co.za</a></p>
                 </div>
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-slate-200 dark:border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500">
             <p>&copy; 2025 Angel Plumbers. All rights reserved. Designed with ❤️ by Sebastian (RandomTech Agency).</p>
             <div class="flex items-center gap-6">
-                <a href="privacy.html" class="hover:text-slate-400 transition-colors">Privacy Policy</a>
-                <a href="privacy.html" class="hover:text-slate-400 transition-colors">Legal Notice</a>
+                <a href="privacy.html" class="hover:text-slate-700 dark:hover:text-slate-400 transition-colors">Privacy Policy</a>
+                <a href="privacy.html" class="hover:text-slate-700 dark:hover:text-slate-400 transition-colors">Legal Notice</a>
             </div>
         </div>
     </footer>
